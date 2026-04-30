@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/db';
-import { DocumentsResponse } from '@/lib/types';
+import { DocumentsResponse, Document } from '@/lib/types';
 
 export async function GET(request: NextRequest): Promise<NextResponse<DocumentsResponse>> {
   try {
@@ -11,9 +11,16 @@ export async function GET(request: NextRequest): Promise<NextResponse<DocumentsR
       .sort({ uploadedAt: -1 })
       .toArray();
 
-    const formattedDocs = documents.map(doc => ({
-      ...doc,
+    const formattedDocs: Document[] = documents.map(doc => ({
       _id: doc._id?.toString(),
+      filename: doc.filename,
+      key: doc.key,
+      bucket: doc.bucket,
+      mimetype: doc.mimetype,
+      size: doc.size,
+      uploadedAt: doc.uploadedAt,
+      metadata: doc.metadata || {},
+      tags: doc.tags || [],
     }));
 
     return NextResponse.json({
