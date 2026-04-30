@@ -1,4 +1,17 @@
 services:
+  mongodb:
+    image: mongo:7.0
+    container_name: ia-documents-mongodb
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   minio:
     image: minio/minio:latest
     container_name: ia-documents-minio
@@ -31,4 +44,5 @@ services:
     container_name: ia-documents-bucket-creator
 
 volumes:
+  mongodb_data:
   minio_data:
