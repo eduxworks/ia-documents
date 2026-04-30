@@ -79,7 +79,7 @@ pnpm install
 pnpm run dev
 ```
 
-La aplicación estará disponible en `http://localhost:3000`
+La aplicación estará disponible en `http://localhost:3100`
 
 ## Opción 2: Ejecución Local sin Docker
 
