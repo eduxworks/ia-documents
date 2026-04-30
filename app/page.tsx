@@ -1,7 +1,7 @@
 'use client';
 
 import { DocumentUpload } from '@/components/DocumentUpload';
-import { DocumentList } from '@/components/DocumentList';
+import { DocumentTable } from '@/components/DocumentTable';
 import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
@@ -38,12 +38,15 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1">
             <DocumentUpload />
           </div>
-          <div className="lg:col-span-2">
-            <DocumentList />
+          <div className="lg:col-span-3">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Documentos ({useAppContext().documents.length})</h2>
+              <DocumentTable />
+            </div>
           </div>
         </div>
       </main>
