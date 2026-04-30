@@ -58,22 +58,27 @@ export function DocumentUpload() {
       uploadFormData.append('metadata', JSON.stringify(formData.metadata));
       uploadFormData.append('tags', formData.tags);
 
+      console.log('[UPLOAD CLIENT] Iniciando subida...');
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: uploadFormData,
       });
 
+      console.log('[UPLOAD CLIENT] Response status:', response.status);
       const data = await response.json();
+      console.log('[UPLOAD CLIENT] Response data:', data);
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al subir el archivo');
+        throw new Error(data.error || `Error del servidor: ${response.status}`);
       }
 
       addDocument(data.document);
       setFormData({ file: null, metadata: {}, tags: '' });
       setError(null);
+      console.log('[UPLOAD CLIENT] Subida exitosa');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error desconocido';
+      console.error('[UPLOAD CLIENT] Error:', message);
       setError(message);
     } finally {
       setLoading(false);
